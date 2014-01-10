@@ -22,8 +22,8 @@ static NSInteger interactionIdentifier;
 
 + (void)trackDeflection:(NSString *)kind deflectingType:(NSString *)deflectingType deflector:(UVBaseModel *)model {
     NSMutableDictionary *params = [self deflectionParams];
-    [params setObject:kind forKey:@"kind"];
-    [params setObject:deflectingType forKey:@"deflecting_type"];
+    if (kind) [params setObject:kind forKey:@"kind"];
+    if (deflectingType) [params setObject:deflectingType forKey:@"deflecting_type"];
     if ([model isKindOfClass:[UVArticle class]]) {
         UVArticle *article = (UVArticle *)model;
         [params setObject:@"Faq" forKey:@"deflector_type"];
