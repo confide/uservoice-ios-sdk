@@ -332,8 +332,8 @@
 
 - (void)initCellForAddComment:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.textLabel.text = NSLocalizedStringFromTable(@"Add a comment", @"UserVoice", nil);
-    if (IOS7) {
-        cell.textLabel.textColor = cell.textLabel.tintColor;
+    if ([UVStyleSheet instance].tintColor) {
+        cell.textLabel.textColor = [UVStyleSheet instance].tintColor;
     }
 }
 
@@ -449,7 +449,7 @@
 
         UIButton *want = [UIButton new];
         [want setTitle:NSLocalizedStringFromTable(@"I want this", @"UserVoice", nil) forState:UIControlStateNormal];
-        [want setTitleColor:want.tintColor forState:UIControlStateNormal];
+        [want setTitleColor:[UVStyleSheet instance].tintColor forState:UIControlStateNormal];
         [want addTarget:self action:@selector(subscribe) forControlEvents:UIControlEventTouchUpInside];
 
         NSArray *constraints = @[

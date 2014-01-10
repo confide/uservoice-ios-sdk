@@ -39,8 +39,8 @@
 - (void)initCellForContact:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.text = NSLocalizedStringFromTable(@"Send us a message", @"UserVoice", nil);
-    if (IOS7) {
-        cell.textLabel.textColor = cell.textLabel.tintColor;
+    if ([UVStyleSheet instance].tintColor) {
+        cell.textLabel.textColor = [UVStyleSheet instance].tintColor;
     }
 }
 

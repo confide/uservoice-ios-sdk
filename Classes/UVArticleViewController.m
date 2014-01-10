@@ -59,7 +59,7 @@
     _footerLabel = label;
     UIButton *yes = [UIButton new];
     [yes setTitle:NSLocalizedStringFromTable(@"Yes!", @"UserVoice", nil) forState:UIControlStateNormal];
-    [yes setTitleColor:(IOS7 ? yes.tintColor : [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.0]) forState:UIControlStateNormal];
+    [yes setTitleColor:([UVStyleSheet instance].tintColor ? [UVStyleSheet instance].tintColor : [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.0]) forState:UIControlStateNormal];
     [yes addTarget:self action:@selector(yesButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     _yes = yes;
     UIButton *no = [UIButton new];

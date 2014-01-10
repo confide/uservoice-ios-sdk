@@ -85,8 +85,8 @@
 - (void)initCellForAdd:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.text = NSLocalizedStringFromTable(@"Post an idea", @"UserVoice", nil);
-    if (IOS7) {
-        cell.textLabel.textColor = cell.textLabel.tintColor;
+    if ([UVStyleSheet instance].tintColor) {
+        cell.textLabel.textColor = [UVStyleSheet instance].tintColor;
     }
 }
 

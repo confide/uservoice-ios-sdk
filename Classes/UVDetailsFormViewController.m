@@ -8,6 +8,7 @@
 
 #import "UVDetailsFormViewController.h"
 #import "UVValueSelectViewController.h"
+#import "UVStyleSheet.h"
 
 #define LABEL 100
 #define VALUE 101
@@ -106,8 +107,8 @@
     UILabel *label = [UILabel new];
     label.tag = LABEL;
     label.font = [UIFont systemFontOfSize:13];
-    if (IOS7) {
-        label.textColor = label.tintColor;
+    if ([UVStyleSheet instance].tintColor) {
+        label.textColor = [UVStyleSheet instance].tintColor;
     }
     UILabel *value = [UILabel new];
     value.tag = VALUE;
