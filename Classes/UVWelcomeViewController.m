@@ -276,6 +276,7 @@
 
     [self setupGroupedTableView];
 
+    /*
     if ([UVSession currentSession].config.showKnowledgeBase) {
         UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
         searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -292,6 +293,7 @@
         _searchController.searchResultsDelegate = self;
         _searchController.searchResultsDataSource = self;
     }
+    */
 
     if (![UVSession currentSession].clientConfig.whiteLabel) {
         _tableView.tableFooterView = self.poweredByView;
