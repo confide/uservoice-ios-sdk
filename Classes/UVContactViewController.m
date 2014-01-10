@@ -224,11 +224,8 @@
 }
 
 - (void)requestDismissal {
-    if (_fieldsView.textView.text.length == 0 || [_fieldsView.textView.text isEqualToString:_loadedDraft]) {
-        [self dismiss];
-    } else {
-        [self showSaveActionSheet];
-    }
+    [self clearDraft];
+    [self dismiss];
 }
 
 @end
