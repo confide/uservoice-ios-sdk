@@ -179,7 +179,7 @@
     if (IOS7) {
         cell.separatorInset = UIEdgeInsetsMake(0, 58, 0, 0);
     }
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uv_article.png"]];
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"uv_article.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     UILabel *title = [UILabel new];
     title.font = [UIFont systemFontOfSize:18];
     title.numberOfLines = 0;

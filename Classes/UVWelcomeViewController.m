@@ -74,7 +74,7 @@
     cell.backgroundColor = [UIColor whiteColor];
     UVArticle *article = [[UVSession currentSession].articles objectAtIndex:indexPath.row];
     cell.textLabel.text = article.question;
-    cell.imageView.image = [UIImage imageNamed:@"uv_article.png"];
+    cell.imageView.image = [[UIImage imageNamed:@"uv_article.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.numberOfLines = 2;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0];
