@@ -205,8 +205,10 @@
         return nil;
     else if ([UVSession currentSession].config.topicId)
         return [((UVHelpTopic *)[[UVSession currentSession].topics objectAtIndex:0]) name];
-    else
+    else if (section > 0)
         return NSLocalizedStringFromTable(@"Knowledge Base", @"UserVoice", nil);
+    else
+        return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForHeaderInSection:(NSInteger)section {
