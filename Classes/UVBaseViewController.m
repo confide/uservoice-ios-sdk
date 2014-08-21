@@ -14,7 +14,6 @@
 #import "UVUser.h"
 #import "UVStyleSheet.h"
 #import "UVImageCache.h"
-#import "UserVoice.h"
 #import "UVAccessToken.h"
 #import "UVSigninManager.h"
 #import "UVKeyboardUtils.h"
@@ -40,10 +39,13 @@
     if (_firstController && [[UserVoice delegate] respondsToSelector:@selector(userVoiceRequestsDismissal)]) {
         [[UserVoice delegate] userVoiceRequestsDismissal];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        if (_firstController && [[UserVoice delegate] respondsToSelector:@selector(userVoiceWasDismissed)]) {
-            [[UserVoice delegate] userVoiceWasDismissed];
-        }
+        __weak UVBaseViewController *_weakSelf = self;
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     if (_weakSelf.firstController && [[UserVoice delegate] respondsToSelector:@selector(userVoiceWasDismissed)]) {
+                                         [[UserVoice delegate] userVoiceWasDismissed];
+                                     }
+                                 }];
     }
 }
 
@@ -114,10 +116,10 @@
 }
 
 - (void)alertError:(NSString *)message {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"UserVoice", nil)
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Error", @"UserVoice", [UserVoice bundle], nil)
                                 message:message
                                delegate:nil
-                      cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"UserVoice", nil)
+                      cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"OK", @"UserVoice", [UserVoice bundle], nil)
                       otherButtonTitles:nil] show];
 }
 
@@ -125,7 +127,7 @@
     NSString *msg = nil;
     [self hideActivityIndicator];
     if ([UVUtils isConnectionError:error]) {
-        msg = NSLocalizedStringFromTable(@"There appears to be a problem with your network connection, please check your connectivity and try again.", @"UserVoice", nil);
+        msg = NSLocalizedStringFromTableInBundle(@"There appears to be a problem with your network connection, please check your connectivity and try again.", @"UserVoice", [UserVoice bundle], nil);
     } else {
         NSDictionary *userInfo = [error userInfo];
         for (NSString *key in [userInfo allKeys]) {
@@ -133,7 +135,7 @@
                 continue;
             NSString *displayKey = nil;
             if ([key isEqualToString:@"display_name"])
-                displayKey = NSLocalizedStringFromTable(@"User name", @"UserVoice", nil);
+                displayKey = NSLocalizedStringFromTableInBundle(@"User name", @"UserVoice", [UserVoice bundle], nil);
             else
                 displayKey = [[key stringByReplacingOccurrencesOfString:@"_" withString:@" "] capitalizedString];
 
@@ -144,20 +146,20 @@
                 msg = [NSString stringWithFormat:@"%@ %@", displayKey, [userInfo valueForKey:key]];
         }
         if (!msg)
-            msg = NSLocalizedStringFromTable(@"Sorry, there was an error in the application.", @"UserVoice", nil);
+            msg = NSLocalizedStringFromTableInBundle(@"Sorry, there was an error in the application.", @"UserVoice", [UserVoice bundle], nil);
     }
     [self alertError:msg];
 }
 
 - (void)initNavigationItem {
-    self.navigationItem.title = NSLocalizedStringFromTable(@"Feedback", @"UserVoice", nil);
+    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"Feedback", @"UserVoice", [UserVoice bundle], nil);
 
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Back", @"UserVoice", nil)
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Back", @"UserVoice", [UserVoice bundle], nil)
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:nil
                                                                             action:nil];
 
-    _exitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Cancel", @"UserVoice", nil)
+    _exitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", @"UserVoice", [UserVoice bundle], nil)
                                                    style:UIBarButtonItemStylePlain
                                                   target:self
                                                   action:@selector(dismiss)];
@@ -170,7 +172,7 @@
     UIView *power = [UIView new];
     power.frame = CGRectMake(0, 0, 0, 80);
     UILabel *uv = [UILabel new];
-    uv.text = NSLocalizedStringFromTable(@"Powered by UserVoice", @"UserVoice", nil);
+    uv.text = NSLocalizedStringFromTableInBundle(@"Powered by UserVoice", @"UserVoice", [UserVoice bundle], nil);
     uv.font = [UIFont systemFontOfSize:13];
     uv.textColor = [UIColor grayColor];
     uv.backgroundColor = [UIColor clearColor];
@@ -185,10 +187,6 @@
                subviews:NSDictionaryOfVariableBindings(uv, version)
             constraints:@[@"V:|-[uv]-[version]", @"|[uv]|", @"|[version]|"]];
     return power;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
 }
 
 - (BOOL)needNestedModalHack {
@@ -306,7 +304,7 @@
 
 - (void)keyboardWillShow:(NSNotification*)notification {
     if (IPAD) {
-        CGFloat formSheetHeight = 576;
+        NSInteger formSheetHeight = 576;
         if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
             _kbHeight = formSheetHeight - 352;
         } else {
@@ -314,9 +312,9 @@
         }
     } else {
         NSDictionary* info = [notification userInfo];
-        CGRect rect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+        CGRect rect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
         // Convert from window space to view space to account for orientation
-        _kbHeight = [self.view convertRect:rect fromView:nil].size.height;
+        _kbHeight = (NSInteger)[self.view convertRect:rect fromView:nil].size.height;
     }
 }
 
@@ -343,7 +341,7 @@
     UINavigationController *navigationController = [UINavigationController new];
     [UVUtils applyStylesheetToNavigationController:navigationController];
     navigationController.viewControllers = @[viewController];
-    if (IPAD)
+    if (FORMSHEET)
         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -431,7 +429,7 @@
     if ([self respondsToSelector:customizeCellSelector]) {
         [self performSelector:customizeCellSelector withObject:cell withObject:indexPath];
     }
-    cell.contentView.frame = CGRectMake(0, 0, [self cellWidthForStyle:_tableView.style accessoryType:cell.accessoryType], 0);
+    cell.contentView.frame = CGRectMake(0, 0, [self cellWidthForStyle:_tableView.style accessoryType:cell.accessoryType], 10000);
     [cell.contentView setNeedsLayout];
     [cell.contentView layoutIfNeeded];
 
@@ -469,7 +467,7 @@
             if (width < 400) {
                 margin = 10;
             } else {
-                margin = MAX(31, MIN(45, width*0.06));
+                margin = MAX(31, MIN(45, width*0.06f));
             }
         } else {
             margin = width - 10;
@@ -501,7 +499,11 @@
     return field;
 }
 
-#pragma mark - UVSigninManageDelegate
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [UVStyleSheet instance].preferredStatusBarStyle;
+}
+
+#pragma mark - UVSigninManagerDelegate
 
 - (void)signinManagerDidSignIn:(UVUser *)user {
     [self hideActivityIndicator];
@@ -517,6 +519,10 @@
 - (void)loadView {
     [self initNavigationItem];
     [self registerForKeyboardNotifications];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
 }
 
 - (void)dealloc {

@@ -16,6 +16,8 @@
 #import "UVSuggestionDetailsViewController.h"
 #import "UVInstantAnswersViewController.h"
 #import "UVUtils.h"
+#import "UVSession.h"
+#import "UVClientConfig.h"
 
 #define TITLE 20
 #define SUBSCRIBER_COUNT 21
@@ -52,7 +54,9 @@
 - (void)doSearch:(NSTimer *)timer {
     _loading = YES;
     self.runningQuery = _searchText;
-    [UVDeflection setSearchText:_searchText];
+    if (_deflectingType) {
+        [UVDeflection setSearchText:_searchText];
+    }
     [UVArticle getInstantAnswers:_searchText delegate:self];
 }
 
@@ -95,14 +99,15 @@
 }
 
 - (void)pushViewFor:(id)instantAnswer parent:(UIViewController *)parent {
-    [UVDeflection trackDeflection:@"show" deflectingType:_deflectingType deflector:instantAnswer];
+    if (_deflectingType) {
+        [UVDeflection trackDeflection:@"show" deflectingType:_deflectingType deflector:instantAnswer];
+    }
     if ([instantAnswer isMemberOfClass:[UVArticle class]]) {
         UVArticleViewController *next = [UVArticleViewController new];
         next.article = (UVArticle *)instantAnswer;
         next.helpfulPrompt = _articleHelpfulPrompt;
         next.returnMessage = _articleReturnMessage;
         next.deflectingType = _deflectingType;
-        next.instantAnswers = YES;
         [parent.navigationController pushViewController:next animated:YES];
     } else {
         UVSuggestion *suggestion = (UVSuggestion *)instantAnswer;
@@ -110,7 +115,7 @@
         next.helpfulPrompt = _articleHelpfulPrompt;
         next.returnMessage = _articleReturnMessage;
         next.deflectingType = _deflectingType;
-        next.instantAnswers = YES;
+        next.instantAnswers = (_deflectingType != nil);
         [parent.navigationController pushViewController:next animated:YES];
     }
 }
@@ -127,8 +132,8 @@
     if (IOS7) {
         cell.separatorInset = UIEdgeInsetsMake(0, 58, 0, 0);
     }
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uv_idea.png"]];
-    UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uv_heart.png"]];
+    UIImageView *icon = [UVUtils imageViewWithImageNamed:@"uv_idea.png"];
+    UIImageView *heart = [UVUtils imageViewWithImageNamed:@"uv_heart.png"];
     UILabel *subs = [UILabel new];
     subs.font = [UIFont systemFontOfSize:14];
     subs.textColor = [UIColor grayColor];
@@ -167,8 +172,12 @@
     UILabel *status = (UILabel *)[cell.contentView viewWithTag:STATUS];
     UIView *statusColor = [cell.contentView viewWithTag:STATUS_COLOR];
     title.text = suggestion.title;
-    subs.text = [NSString stringWithFormat:@"%d", (int)suggestion.subscriberCount];
-    [statusColor.layer.sublayers.lastObject setBackgroundColor:suggestion.statusColor.CGColor];
+    if ([UVSession currentSession].clientConfig.displaySuggestionsByRank) {
+        subs.text = suggestion.rankString;
+    } else {
+        subs.text = [NSString stringWithFormat:@"%d", (int)suggestion.subscriberCount];
+    }
+    [(CALayer *)statusColor.layer.sublayers.lastObject setBackgroundColor:suggestion.statusColor.CGColor];
     status.textColor = suggestion.statusColor;
     status.text = [suggestion.status uppercaseString];
 }
@@ -179,7 +188,7 @@
     if (IOS7) {
         cell.separatorInset = UIEdgeInsetsMake(0, 58, 0, 0);
     }
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"uv_article.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    UIImageView *icon = [[UVUtils imageViewWithImageNamed:@"uv_article.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UILabel *title = [UILabel new];
     title.font = [UIFont systemFontOfSize:18];
     title.numberOfLines = 0;

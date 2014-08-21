@@ -7,6 +7,7 @@
 //
 
 #import "UVTruncatingLabel.h"
+#import "UserVoice.h"
 #import "UVDefines.h"
 
 @implementation UVTruncatingLabel {
@@ -17,9 +18,10 @@
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.userInteractionEnabled = YES;
+        self.lineBreakMode = NSLineBreakByWordWrapping;
         [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(expandAndNotify)]];
         _moreLabel = [UILabel new];
-        _moreLabel.text = NSLocalizedStringFromTable(@"more", @"UserVoice", nil);
+        _moreLabel.text = NSLocalizedStringFromTableInBundle(@"more", @"UserVoice", [UserVoice bundle], nil);
         _moreLabel.font = [UIFont systemFontOfSize:12];
         _moreLabel.backgroundColor = [UIColor clearColor];
         if (IOS7) {
@@ -41,7 +43,7 @@
 }
 
 - (void)update {
-    if (!_fullText || self.effectiveWidth == 0) return;
+    if (!_fullText || self.effectiveWidth <= 0) return;
     self.text = _fullText;
     _lastWidth = self.effectiveWidth;
     if (_expanded) {
@@ -51,11 +53,11 @@
         if ([lines count] > 3) {
             CGSize moreSize = [_moreLabel intrinsicContentSize];
             self.text = [NSString stringWithFormat:@"%@%@%@", [lines objectAtIndex:0], [lines objectAtIndex:1], [lines objectAtIndex:2]];
-            int i = [self.text length] - 1;
-            CGRect r = [self rectForLetterAtIndex:i];
+            int i = (int)[self.text length] - 1;
+            CGRect r = [self rectForLetterAtIndex:i lines:lines];
             while (self.effectiveWidth - r.origin.x - r.size.width < (20 + moreSize.width) && i > 0) {
                 i--;
-                r = [self rectForLetterAtIndex:i];
+                r = [self rectForLetterAtIndex:i lines:lines];
             }
             self.text = [NSString stringWithFormat:@"%@...", [self.text substringWithRange:NSMakeRange(0, i+1)]];
             _moreLabel.hidden = NO;
@@ -66,7 +68,9 @@
 }
 
 - (CGSize)intrinsicContentSize {
-    [self update];
+    if (_lastWidth != self.effectiveWidth) {
+        [self update];
+    }
     return [super intrinsicContentSize];
 }
 

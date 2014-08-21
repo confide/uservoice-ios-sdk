@@ -18,7 +18,7 @@
 - (void)setAuthHeadersForRequest:(NSMutableURLRequest *)request;
 - (NSMutableURLRequest *)configuredRequest;
 - (NSURL *)composedURL;
-+ (id)handleResponse:(NSHTTPURLResponse *)response error:(NSError **)error;
++ (id)handleResponse:(NSHTTPURLResponse *)response error:(NSError * __autoreleasing *)error;
 + (NSString *)buildQueryStringFromParams:(NSDictionary *)params;
 - (void)finish;
 @end
@@ -43,22 +43,6 @@
     return self;
 }
 
-
-- (void)target:(id)target performSelectorOnMainThread:(SEL)selector withObjects:(NSArray *)objects {
-    NSMethodSignature *signature = [target methodSignatureForSelector:selector];
-    if (signature) {
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-        [invocation setTarget:target];
-        [invocation setSelector:selector];
-        
-        for (int i = 0; i < objects.count; i++) {
-            id obj = [objects objectAtIndex:i];
-            [invocation setArgument:&obj atIndex:(i + 2)];
-        }
-        
-        [invocation performSelectorOnMainThread:@selector(invoke) withObject:nil waitUntilDone:YES];
-    }
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Concurrent NSOperation Methods
@@ -131,16 +115,20 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {    
     //HRLOG(@"Server responded with:%i, %@", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]]);
     
-    if ([_delegate respondsToSelector:@selector(restConnection:didReceiveResponse:object:)]) {
-        [self target:_delegate performSelectorOnMainThread:@selector(restConnection:didReceiveResponse:object:) withObjects:@[connection, response, _object]];
+    if ([self.delegate respondsToSelector:@selector(restConnection:didReceiveResponse:object:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate restConnection:connection didReceiveResponse:response object:self->_object];
+        });
     }
     
     NSError *error = nil;
     [[self class] handleResponse:(NSHTTPURLResponse *)response error:&error];
     
     if(error) {
-        if([_delegate respondsToSelector:@selector(restConnection:didReceiveError:response:object:)]) {
-            [self target:_delegate performSelectorOnMainThread:@selector(restConnection:didReceiveError:response:object:) withObjects:@[connection, error, response, _object]];
+        if([self.delegate respondsToSelector:@selector(restConnection:didReceiveError:response:object:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate restConnection:connection didReceiveError:error response:response object:self->_object];
+            });
             [connection cancel];
             [self finish];
         }
@@ -155,8 +143,10 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {  
     //HRLOG(@"Connection failed: %@", [error localizedDescription]);
-    if([_delegate respondsToSelector:@selector(restConnection:didFailWithError:object:)]) {        
-        [self target:_delegate performSelectorOnMainThread:@selector(restConnection:didFailWithError:object:) withObjects:@[connection, error, _object]];
+    if([self.delegate respondsToSelector:@selector(restConnection:didFailWithError:object:)]) {        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate restConnection:connection didFailWithError:error object:self->_object];
+        });
     }
     
     [self finish];
@@ -170,16 +160,20 @@
                 
         if(parseError) {
             NSString *rawString = [[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding];
-            if([_delegate respondsToSelector:@selector(restConnection:didReceiveParseError:responseBody:object:)]) {
-                [self target:_delegate performSelectorOnMainThread:@selector(restConnection:didReceiveParseError:responseBody:object:) withObjects:@[connection, parseError, rawString, _object]];
+            if([self.delegate respondsToSelector:@selector(restConnection:didReceiveParseError:responseBody:object:)]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.delegate restConnection:connection didReceiveParseError:parseError responseBody:rawString object:self->_object];
+                });
             }
             [self finish];
             return;
         }
     }
 
-    if([_delegate respondsToSelector:@selector(restConnection:didReturnResource:object:)]) {        
-        [self target:_delegate performSelectorOnMainThread:@selector(restConnection:didReturnResource:object:) withObjects:@[connection, results, _object]];
+    if([self.delegate respondsToSelector:@selector(restConnection:didReturnResource:object:)]) {        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate restConnection:connection didReturnResource:results object:self->_object];
+        });
     }
         
     [self finish];
@@ -287,13 +281,14 @@
 #pragma mark - Class Methods
 + (HRRequestOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString*)urlPath options:(NSDictionary*)requestOptions object:(id)obj {
     id operation = [[self alloc] initWithMethod:method path:urlPath options:requestOptions object:obj];
+    // NSLog(@"%@", urlPath);
     [[HROperationQueue sharedOperationQueue] addOperation:operation];
     return operation;
 }
 
-+ (id)handleResponse:(NSHTTPURLResponse *)response error:(NSError **)error {
++ (id)handleResponse:(NSHTTPURLResponse *)response error:(NSError * __autoreleasing *)error {
     NSInteger code = [response statusCode];
-    NSUInteger ucode = [[NSNumber numberWithInt:code] unsignedIntValue];
+    NSUInteger ucode = [[NSNumber numberWithInteger:code] unsignedIntValue];
     NSRange okRange = NSMakeRange(200, 201);
     
     if(NSLocationInRange(ucode, okRange)) {

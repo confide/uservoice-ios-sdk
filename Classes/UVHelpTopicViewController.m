@@ -52,7 +52,9 @@
         next.article = article;
         [self.navigationController pushViewController:next animated:YES];
     } else if (indexPath.section == 0) {
-        [self retrieveMoreArticles];
+        if (!_loading) {
+            [self retrieveMoreArticles];
+        }
     } else {
         [self presentModalViewController:[UVContactViewController new]];
     }
@@ -70,7 +72,7 @@
 }
 
 - (void)initCellForContact:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-    cell.textLabel.text = NSLocalizedStringFromTable(@"Send us a message", @"UserVoice", nil);
+    cell.textLabel.text = NSLocalizedStringFromTableInBundle(@"Send us a message", @"UserVoice", [UserVoice bundle], nil);
     if ([UVStyleSheet instance].tintColor) {
         cell.textLabel.textColor = [UVStyleSheet instance].tintColor;
     }
@@ -110,7 +112,7 @@
 }
 
 - (void)initCellForLoad:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-    cell.backgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.backgroundColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc] initWithFrame:cell.frame];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
@@ -122,7 +124,7 @@
 
 - (void)customizeCellForLoad:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     UILabel *label = (UILabel *)[cell viewWithTag:LOADING];
-    label.text = _loading ? NSLocalizedStringFromTable(@"Loading...", @"UserVoice", nil) : NSLocalizedStringFromTable(@"Load more", @"UserVoice", nil);
+    label.text = _loading ? NSLocalizedStringFromTableInBundle(@"Loading...", @"UserVoice", [UserVoice bundle], nil) : NSLocalizedStringFromTableInBundle(@"Load more", @"UserVoice", [UserVoice bundle], nil);
 }
 
 - (void)showActivityIndicator {
@@ -179,7 +181,7 @@
         [UVArticle getArticlesWithTopicId:_topic.topicId page:1 delegate:self];
         _articles = [NSMutableArray new];
     } else {
-        self.navigationItem.title = NSLocalizedStringFromTable(@"All Articles", @"UserVoice", nil);
+        self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"All Articles", @"UserVoice", [UserVoice bundle], nil);
         _articles = [[UVSession currentSession].articles mutableCopy];
         [_tableView reloadData];
     }

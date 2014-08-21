@@ -38,7 +38,7 @@
 
 - (void)initCellForContact:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.text = NSLocalizedStringFromTable(@"Send us a message", @"UserVoice", nil);
+    cell.textLabel.text = NSLocalizedStringFromTableInBundle(@"Send us a message", @"UserVoice", [UserVoice bundle], nil);
     if ([UVStyleSheet instance].tintColor) {
         cell.textLabel.textColor = [UVStyleSheet instance].tintColor;
     }
@@ -46,13 +46,16 @@
 
 - (void)initCellForForum:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.text = NSLocalizedStringFromTable(@"Feedback Forum", @"UserVoice", nil);
+    cell.textLabel.text = NSLocalizedStringFromTableInBundle(@"Feedback Forum", @"UserVoice", [UserVoice bundle], nil);
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (void)customizeCellForForum:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     NSString *detail;
     if ([UVSession currentSession].forum.suggestionsCount == 1) {
-        detail = NSLocalizedStringFromTable(@"2 idea", @"UserVoice", nil);
+        detail = NSLocalizedStringFromTableInBundle(@"1 idea", @"UserVoice", [UserVoice bundle], nil);
     } else {
-        detail = [NSString stringWithFormat:NSLocalizedStringFromTable(@"%@ ideas", @"UserVoice", nil), [UVUtils formatInteger:[UVSession currentSession].forum.suggestionsCount]];
+        detail = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ ideas", @"UserVoice", [UserVoice bundle], nil), [UVUtils formatInteger:[UVSession currentSession].forum.suggestionsCount]];
     }
     cell.detailTextLabel.text = detail;
 }
@@ -60,7 +63,7 @@
 - (void)customizeCellForTopic:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor whiteColor];
     if (indexPath.row == [[UVSession currentSession].topics count]) {
-        cell.textLabel.text = NSLocalizedStringFromTable(@"All Articles", @"UserVoice", nil);
+        cell.textLabel.text = NSLocalizedStringFromTableInBundle(@"All Articles", @"UserVoice", [UserVoice bundle], nil);
         cell.detailTextLabel.text = nil;
     } else {
         UVHelpTopic *topic = [[UVSession currentSession].topics objectAtIndex:indexPath.row];
@@ -74,7 +77,7 @@
     cell.backgroundColor = [UIColor whiteColor];
     UVArticle *article = [[UVSession currentSession].articles objectAtIndex:indexPath.row];
     cell.textLabel.text = article.question;
-    cell.imageView.image = [[UIImage imageNamed:@"uv_article.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.imageView.image = [[UVUtils imageNamed:@"uv_article.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.numberOfLines = 2;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0];
@@ -82,7 +85,7 @@
 
 - (void)initCellForFlash:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.text = NSLocalizedStringFromTable(@"View idea", @"UserVoice", nil);
+    cell.textLabel.text = NSLocalizedStringFromTableInBundle(@"View idea", @"UserVoice", [UserVoice bundle], nil);
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
@@ -109,7 +112,7 @@
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = @"";
     NSInteger style = UITableViewCellStyleValue1;
-    if (theTableView == _searchController.searchResultsTableView) {
+    if (theTableView == _searchController.searchResultsTableView || _searching) {
         id model = [self.searchResults objectAtIndex:indexPath.row];
         if ([model isMemberOfClass:[UVArticle class]]) {
             identifier = @"ArticleResult";
@@ -120,7 +123,7 @@
     } else {
         if (indexPath.section == 0 && indexPath.row == 0 && [UVSession currentSession].config.showContactUs)
             identifier = @"Contact";
-        else if (indexPath.section == 0)
+        else if (indexPath.section == 0 && [UVSession currentSession].config.showForum)
             identifier = @"Forum";
         else if ([self showArticles])
             identifier = @"Article";
@@ -132,7 +135,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _searchController.searchResultsTableView) {
+    if (tableView == _searchController.searchResultsTableView || _searching) {
         NSString *identifier;
         id model = [self.searchResults objectAtIndex:indexPath.row];
         if ([model isMemberOfClass:[UVArticle class]]) {
@@ -147,7 +150,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)theTableView {
-    if (theTableView == _searchController.searchResultsTableView) {
+    if (theTableView == _searchController.searchResultsTableView || _searching) {
         return 1;
     } else {
         int sections = 0;
@@ -163,7 +166,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)theTableView numberOfRowsInSection:(NSInteger)section {
-    if (theTableView == _searchController.searchResultsTableView) {
+    if (theTableView == _searchController.searchResultsTableView || _searching) {
         return self.searchResults.count;
     } else {
         if (section == 0 && ([UVSession currentSession].config.showForum || [UVSession currentSession].config.showContactUs))
@@ -176,7 +179,7 @@
 }
 
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (theTableView == _searchController.searchResultsTableView) {
+    if (theTableView == _searchController.searchResultsTableView || _searching) {
         [_instantAnswerManager pushViewFor:[self.searchResults objectAtIndex:indexPath.row] parent:self];
     } else {
         if (indexPath.section == 0 && indexPath.row == 0 && [UVSession currentSession].config.showContactUs) {
@@ -201,18 +204,20 @@
 }
 
 - (NSString *)tableView:(UITableView *)theTableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0 && [UVSession currentSession].config.showForum)
+    if (theTableView == _searchController.searchResultsTableView || _searching)
+        return nil;
+    else if (section == 0 && ([UVSession currentSession].config.showForum || [UVSession currentSession].config.showContactUs))
         return nil;
     else if ([UVSession currentSession].config.topicId)
         return [((UVHelpTopic *)[[UVSession currentSession].topics objectAtIndex:0]) name];
     else if (section > 0)
-        return NSLocalizedStringFromTable(@"Knowledge Base", @"UserVoice", nil);
+        return NSLocalizedStringFromTableInBundle(@"Knowledge Base", @"UserVoice", [UserVoice bundle], nil);
     else
         return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForHeaderInSection:(NSInteger)section {
-    return theTableView == _searchController.searchResultsTableView ? 0 : 30;
+    return theTableView == _searchController.searchResultsTableView || _searching ? 0 : 30;
 }
 
 - (void)logoTapped {
@@ -222,22 +227,30 @@
 #pragma mark ===== UISearchBarDelegate Methods =====
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [_searchController setActive:YES animated:YES];
-    _searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [searchBar setShowsCancelButton:YES animated:YES];
     _filter = IA_FILTER_ALL;
     searchBar.showsScopeBar = YES;
     searchBar.selectedScopeButtonIndex = 0;
+    [searchBar sizeToFit];
+    
+    if (FORMSHEET) {
+        _tableView.tableHeaderView = searchBar;
+        _searching = YES;
+        [_tableView reloadData];
+    } else {
+        [_searchController setActive:YES animated:YES];
+        _searchController.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
     return YES;
-}
-
-- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
-    controller.searchBar.showsScopeBar = NO;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     _filter = searchBar.selectedScopeButtonIndex;
-    [_searchController.searchResultsTableView reloadData];
+    if (FORMSHEET) {
+        [_tableView reloadData];
+    } else {
+        [_searchController.searchResultsTableView reloadData];
+    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -245,9 +258,30 @@
     [_instantAnswerManager search];
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    _searchBar.showsScopeBar = NO;
+    if (FORMSHEET) {
+        [_searchBar setShowsCancelButton:NO animated:YES];
+        _searchBar.text = @"";
+        _instantAnswerManager.instantAnswers = [NSArray array];
+        [_searchBar resignFirstResponder];
+        _searching = NO;
+        [_searchBar sizeToFit];
+        _tableView.tableHeaderView = _searchBar;
+        [_tableView reloadData];
+    }
+}
+
+#pragma mark ===== Search handling =====
+
 - (void)didUpdateInstantAnswers {
-    if (_searchController.active)
-        [_searchController.searchResultsTableView reloadData];
+    if (FORMSHEET) {
+        if (_searching)
+            [_tableView reloadData];
+    } else {
+        if (_searchController.active)
+            [_searchController.searchResultsTableView reloadData];
+    }
 }
 
 - (NSArray *)searchResults {
@@ -270,8 +304,8 @@
     [UVBabayaga track:VIEW_KB];
     _instantAnswerManager = [UVInstantAnswerManager new];
     _instantAnswerManager.delegate = self;
-    self.navigationItem.title = NSLocalizedStringFromTable(@"Feedback & Support", @"UserVoice", nil);
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Close", @"UserVoice", nil)
+    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"Feedback & Support", @"UserVoice", [UserVoice bundle], nil);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Close", @"UserVoice", [UserVoice bundle], nil)
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(dismiss)];
@@ -280,20 +314,21 @@
 
     /*
     if ([UVSession currentSession].config.showKnowledgeBase) {
-        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
-        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        searchBar.placeholder = NSLocalizedStringFromTable(@"Search", @"UserVoice", nil);
-        searchBar.delegate = self;
-        searchBar.showsScopeBar = NO;
+        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+        _searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _searchBar.placeholder = NSLocalizedStringFromTableInBundle(@"Search", @"UserVoice", [UserVoice bundle], nil);
+        _searchBar.delegate = self;
+        _searchBar.showsScopeBar = NO;
         if ([UVSession currentSession].config.showForum) {
-            searchBar.scopeButtonTitles = @[NSLocalizedStringFromTable(@"All", @"UserVoice", nil), NSLocalizedStringFromTable(@"Articles", @"UserVoice", nil), NSLocalizedStringFromTable(@"Ideas", @"UserVoice", nil)];
+            _searchBar.scopeButtonTitles = @[NSLocalizedStringFromTableInBundle(@"All", @"UserVoice", [UserVoice bundle], nil), NSLocalizedStringFromTableInBundle(@"Articles", @"UserVoice", [UserVoice bundle], nil), NSLocalizedStringFromTableInBundle(@"Ideas", @"UserVoice", [UserVoice bundle], nil)];
         }
-        _tableView.tableHeaderView = searchBar;
+        _tableView.tableHeaderView = _searchBar;
 
-        _searchController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-        _searchController.delegate = self;
-        _searchController.searchResultsDelegate = self;
-        _searchController.searchResultsDataSource = self;
+        if (!FORMSHEET) {
+            _searchController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
+            _searchController.searchResultsDelegate = self;
+            _searchController.searchResultsDataSource = self;
+        }
     }
     */
 
@@ -302,6 +337,11 @@
     }
 
     [_tableView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [_tableView reloadData];
+    [super viewWillAppear:animated];
 }
 
 @end

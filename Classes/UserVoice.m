@@ -16,35 +16,55 @@
 #import "UVNavigationController.h"
 #import "UVUtils.h"
 #import "UVBabayaga.h"
-#import "UVClientConfig.h"
 
 @implementation UserVoice
+
+static id<UVDelegate> userVoiceDelegate;
+static NSBundle *userVoiceBundle;
 
 + (void)initialize:(UVConfig *)config {
     [[UVSession currentSession] clear];
     [UVBabayaga instance].userTraits = [config traits];
     [UVSession currentSession].config = config;
     [UVBabayaga track:VIEW_APP];
-    // preload client config so that babayaga can flush
-    [UVClientConfig getWithDelegate:self];
 }
 
-+ (void)didRetrieveClientConfig:(UVClientConfig *)clientConfig {
-    [UVSession currentSession].clientConfig = clientConfig;
++ (NSBundle *)bundle {
+    if (!userVoiceBundle) {
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"UserVoice" withExtension:@"bundle"];
+        if (url) {
+            userVoiceBundle = [NSBundle bundleWithURL:url];
+        }
+    }
+    if (!userVoiceBundle) {
+        userVoiceBundle = [NSBundle mainBundle];
+    }
+    return userVoiceBundle;
 }
 
 + (UINavigationController *)getNavigationControllerForUserVoiceControllers:(NSArray *)viewControllers {
-    [UVBabayaga track:VIEW_CHANNEL];
     [UVSession currentSession].isModal = YES;
     UINavigationController *navigationController = [UVNavigationController new];
     [UVUtils applyStylesheetToNavigationController:navigationController];
     navigationController.viewControllers = viewControllers;
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     return navigationController;
 }
 
 + (void)presentUserVoiceControllers:(NSArray *)viewControllers forParentViewController:(UIViewController *)parentViewController {
     UINavigationController *navigationController = [self getNavigationControllerForUserVoiceControllers:viewControllers];
+    BOOL useFormSheet;
+    if (IOS8) {
+#ifdef __IPHONE_8_0
+        useFormSheet = parentViewController.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && parentViewController.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
+#endif
+    } else {
+        useFormSheet = IPAD;
+    }
+    if (useFormSheet) {
+        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    } else {
+        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     [parentViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
@@ -129,7 +149,6 @@
     [UVBabayaga track:event];
 }
 
-static id<UVDelegate> userVoiceDelegate;
 + (void)setDelegate:(id<UVDelegate>)delegate {
     userVoiceDelegate = delegate;
 }
@@ -139,7 +158,7 @@ static id<UVDelegate> userVoiceDelegate;
 }
 
 + (NSString *)version {
-    return @"3.0.1";
+    return @"3.1.2";
 }
 
 

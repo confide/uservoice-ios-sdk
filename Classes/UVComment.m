@@ -16,12 +16,12 @@
 
 @implementation UVComment
 
-+ (id)getWithSuggestion:(UVSuggestion *)suggestion page:(NSInteger)page delegate:(id)delegate {
++ (id)getWithSuggestion:(UVSuggestion *)suggestion page:(NSInteger)page delegate:(id<UVModelDelegate>)delegate {
     NSString *path = [self apiPath:[NSString stringWithFormat:@"/forums/%d/suggestions/%d/comments.json",
                                     (int)suggestion.forumId,
                                     (int)suggestion.suggestionId]];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [[NSNumber numberWithInt:page] stringValue],
+                            [[NSNumber numberWithInteger:page] stringValue],
                             @"page",
                             nil];
     return [self getPath:path
@@ -31,7 +31,7 @@
                  rootKey:@"comments"];
 }
 
-+ (id)createWithSuggestion:(UVSuggestion *)suggestion text:(NSString *)text delegate:(id)delegate {
++ (id)createWithSuggestion:(UVSuggestion *)suggestion text:(NSString *)text delegate:(id<UVModelDelegate>)delegate {
     NSString *path = [self apiPath:[NSString stringWithFormat:@"/forums/%d/suggestions/%d/comments.json",
                                     (int)suggestion.forumId,
                                     (int)suggestion.suggestionId]];

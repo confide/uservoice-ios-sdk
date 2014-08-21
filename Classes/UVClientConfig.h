@@ -22,10 +22,11 @@
 @property (nonatomic, assign) BOOL ticketsEnabled;
 @property (nonatomic, assign) BOOL feedbackEnabled;
 @property (nonatomic, assign) BOOL whiteLabel;
+@property (nonatomic, assign) BOOL displaySuggestionsByRank;
 @property (nonatomic, assign) NSInteger clientId;
 @property (nonatomic, assign) NSInteger defaultForumId;
 
-+ (id)getWithDelegate:(id)delegate;
++ (id)getWithDelegate:(id<UVModelDelegate>)delegate;
 + (CGFloat)getScreenWidth;
 + (CGFloat)getScreenHeight;
 

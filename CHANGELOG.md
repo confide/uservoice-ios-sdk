@@ -1,5 +1,53 @@
 ## master ##
 
+* iOS 8 fixes
+* Simplified behavior of search boxes when inside a form sheet
+* Updated Chinese translation
+
+## 3.1.2 (2014-08-01) ##
+
+* Updated Portuguese translation
+* Added support for displaying ideas by rank
+
+## 3.1.1 (2014-07-24) ##
+
+* Fix a bug where certain back buttons would be missing on iOS 6
+* Add an API for adding attachments to tickets (thanks to nighthawk)
+* Fix a bug where the nav bar gets lost on the iPad on iOS 7 after searching
+* Fix an issue where tapping a "Loading..." cell would load the same data multiple times
+* Fix perf issue related to truncated (expandable) labels
+* Handle inconsistent suggestion counts from API more gracefully
+* Fix background of Load More cells on iOS 6
+
+## 3.1.0 (2014-04-29) ##
+
+* Fix a bug where the comment form submit button would be incorrectly disabled
+* Show an error message when the user tries to submit a comment with no text
+* Fix a bug where the post idea form submit button would be incorrectly hidden
+* Add `navigationBarActivityIndicatorColor` customization option
+* Show cancel button rather than back button while user is submitting an idea or ticket
+* Add NSURLErrorNetworkConnectionLost to list of errors treated as connectivity errors
+* Add email format validation
+* Trim whitespace before enabling Next button on contact and post idea forms
+* Reload ideas after user posts an idea
+* Clean up idea pagination code
+* Fix a bug related to text area wrapping
+* Work around an iOS bug related to using UISearchDisplayController with UIModalPresentationStyleFormSheet
+* Add a stylesheet option for status bar style
+* Fix a bug where "knowledge base" heading would be repeated
+* Fix a bug that sent way too much traffic to the UserVoice API
+
+## 3.0.3 (2014-02-25) ##
+
+* Fix a bug where kb-only portal view would not display topic names
+* Add resource bundle support for cocoapods
+* Fix some pedantic Xcode warnings
+* Remove some unused resources
+* Fix a crash related to saving external ids
+
+## 3.0.2 (2014-01-16) ##
+
+* Fix a crash caused by selecting a search result on the portal screen
 * Fix a bug in the metrics code
 * Fix a crash related to launching the sdk without a network connection
 

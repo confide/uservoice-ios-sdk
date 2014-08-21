@@ -36,7 +36,8 @@
 
 - (void)didMoveToSuperview {
     for (UIView *view in self.subviews) {
-        [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+        CGFloat constant = (view == _textView) ? -32.0 : 0;
+        [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeWidth multiplier:1.0 constant:constant]];
     }
 }
 
@@ -58,7 +59,7 @@
 
 - (void)updateLayout {
     CGSize contentSize = [_textView sizeThatFits:CGSizeMake(_textView.frame.size.width, MAXFLOAT)];
-    CGFloat height = MAX(60.0, MAX(contentSize.height, self.bounds.size.height - self.contentInset.top - self.contentInset.bottom - _textView.frame.origin.y));
+    CGFloat height = MAX(60.0f, MAX(contentSize.height, self.bounds.size.height - self.contentInset.top - self.contentInset.bottom - _textView.frame.origin.y));
     _heightConstraint.constant = height;
     self.contentSize = CGSizeMake(0, _textView.frame.origin.y + height);
     CGRect rect = [_textView caretRectForPosition:_textView.selectedTextRange.end];

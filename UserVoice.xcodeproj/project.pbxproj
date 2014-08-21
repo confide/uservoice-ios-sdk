@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A37C3D11929A96B00942423 /* UVAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A37C3CF1929A96B00942423 /* UVAttachment.h */; };
+		3A37C3D21929A96B00942423 /* UVAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A37C3D01929A96B00942423 /* UVAttachment.m */; };
 		6474C33614BB8D5D00F6A2F0 /* UserVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 6474C33714BB8D5D00F6A2F0 /* UserVoice.h */; };
 		80B5291E13A16A2F008709D2 /* UVCustomField.h in Headers */ = {isa = PBXBuildFile; fileRef = 80B5291C13A16A2F008709D2 /* UVCustomField.h */; };
 		80B5291F13A16A2F008709D2 /* UVCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B5291D13A16A2F008709D2 /* UVCustomField.m */; };
@@ -142,6 +144,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A37C3CF1929A96B00942423 /* UVAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVAttachment.h; sourceTree = "<group>"; };
+		3A37C3D01929A96B00942423 /* UVAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVAttachment.m; sourceTree = "<group>"; };
 		6474C33714BB8D5D00F6A2F0 /* UserVoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserVoice.h; path = Include/UserVoice.h; sourceTree = SOURCE_ROOT; };
 		80B5291C13A16A2F008709D2 /* UVCustomField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVCustomField.h; sourceTree = "<group>"; };
 		80B5291D13A16A2F008709D2 /* UVCustomField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVCustomField.m; sourceTree = "<group>"; };
@@ -211,9 +215,6 @@
 		D24BDE6111DAE3FA00B26012 /* UVImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVImageView.m; sourceTree = "<group>"; };
 		D24BE09D11DB1B7C00B26012 /* UVTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVTextView.h; sourceTree = "<group>"; };
 		D24BE09E11DB1B7C00B26012 /* UVTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVTextView.m; sourceTree = "<group>"; };
-		D2605D03144662150029F16B /* uv_default_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uv_default_avatar@2x.png"; sourceTree = "<group>"; };
-		D2620C6311B586230053EA4C /* uv_vote_chicklet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_vote_chicklet.png; sourceTree = "<group>"; };
-		D2620C6411B586230053EA4C /* uv_vote_chicklet_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_vote_chicklet_empty.png; sourceTree = "<group>"; };
 		D2620D2D11B589FE0053EA4C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D2620EB611B597290053EA4C /* HRFormatJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRFormatJSON.h; sourceTree = "<group>"; };
 		D2620EB711B597290053EA4C /* HRFormatJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRFormatJSON.m; sourceTree = "<group>"; };
@@ -236,7 +237,6 @@
 		D909DD4117CD3CAA00ECE395 /* UVDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UVDefines.h; sourceTree = "<group>"; };
 		D90A60881857972A00D028DE /* UVTextWithFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVTextWithFieldsView.h; sourceTree = "<group>"; };
 		D90A60891857972A00D028DE /* UVTextWithFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVTextWithFieldsView.m; sourceTree = "<group>"; };
-		D91274AA14ABD9E8003ADF5B /* uv_default_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_default_avatar.png; sourceTree = "<group>"; };
 		D92767F915597F3700E17EF1 /* UVArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVArticle.h; sourceTree = "<group>"; };
 		D92767FA15597F3800E17EF1 /* UVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVArticle.m; sourceTree = "<group>"; };
 		D92767FE1559B0E800E17EF1 /* uv_article.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_article.png; sourceTree = "<group>"; };
@@ -272,20 +272,14 @@
 		D986ADED1624C8E5008291AA /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = UserVoice.strings; sourceTree = "<group>"; };
 		D986ADF01624C8E5008291AA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = UserVoice.strings; sourceTree = "<group>"; };
 		D986ADF31624C8E5008291AA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = UserVoice.strings; sourceTree = "<group>"; };
-		D99902C5152B881F00AED6A7 /* uv_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_logo.png; sourceTree = "<group>"; };
-		D99902C6152B881F00AED6A7 /* uv_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uv_logo@2x.png"; sourceTree = "<group>"; };
 		D99AFAA4164AC1A30061F50C /* UVKeyboardUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVKeyboardUtils.h; sourceTree = "<group>"; };
 		D99AFAA5164AC1A30061F50C /* UVKeyboardUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVKeyboardUtils.m; sourceTree = "<group>"; };
-		D99AFAAF1653F2DE0061F50C /* uv_x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_x.png; sourceTree = "<group>"; };
-		D99AFAB01653F2DE0061F50C /* uv_x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uv_x@2x.png"; sourceTree = "<group>"; };
 		D99BC43C17EB751500AED65E /* UVDeflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVDeflection.h; sourceTree = "<group>"; };
 		D99BC43D17EB751500AED65E /* UVDeflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVDeflection.m; sourceTree = "<group>"; };
 		D9A7A66218185F7500EBF41E /* UVSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVSuccessViewController.h; sourceTree = "<group>"; };
 		D9A7A66318185F7500EBF41E /* UVSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVSuccessViewController.m; sourceTree = "<group>"; };
 		D9B1D1DA14ACCBE700D9189F /* UVImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVImageCache.h; sourceTree = "<group>"; };
 		D9B1D1DB14ACCBE700D9189F /* UVImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVImageCache.m; sourceTree = "<group>"; };
-		D9C35BD016697039004FAA89 /* uv_vote_chicklet_empty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uv_vote_chicklet_empty@2x.png"; sourceTree = "<group>"; };
-		D9C35BD116697039004FAA89 /* uv_vote_chicklet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uv_vote_chicklet@2x.png"; sourceTree = "<group>"; };
 		D9C35BD3166E7DB0004FAA89 /* UVTruncatingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVTruncatingLabel.h; sourceTree = "<group>"; };
 		D9C35BD4166E7DB0004FAA89 /* UVTruncatingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVTruncatingLabel.m; sourceTree = "<group>"; };
 		D9C35BD7166E7E00004FAA89 /* UVCalculatingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVCalculatingLabel.h; sourceTree = "<group>"; };
@@ -301,6 +295,7 @@
 		D9E8B6A618105CC8003C7E07 /* UVInstantAnswerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVInstantAnswerManager.h; sourceTree = "<group>"; };
 		D9E8B6A718105CC8003C7E07 /* UVInstantAnswerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVInstantAnswerManager.m; sourceTree = "<group>"; };
 		D9F2060314C08A8100F4441E /* UVDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVDelegate.h; sourceTree = "<group>"; };
+		D9FAD0E618AE7DBB00EC193B /* UVModelDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UVModelDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +377,7 @@
 				D909DD4117CD3CAA00ECE395 /* UVDefines.h */,
 				D9E8B6A618105CC8003C7E07 /* UVInstantAnswerManager.h */,
 				D9E8B6A718105CC8003C7E07 /* UVInstantAnswerManager.m */,
+				D9FAD0E618AE7DBB00EC193B /* UVModelDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -410,6 +406,8 @@
 			children = (
 				D92767F915597F3700E17EF1 /* UVArticle.h */,
 				D92767FA15597F3800E17EF1 /* UVArticle.m */,
+				3A37C3CF1929A96B00942423 /* UVAttachment.h */,
+				3A37C3D01929A96B00942423 /* UVAttachment.m */,
 				AC3121F6108FC46500000D5F /* UVBaseModel.h */,
 				AC3121F7108FC46500000D5F /* UVBaseModel.m */,
 				AC1B18D210D878D0002B03F7 /* UVCategory.h */,
@@ -554,21 +552,11 @@
 				D9CA8FEF14F4110800F98763 /* en.lproj */,
 				D9CA8FF214F4110800F98763 /* fr.lproj */,
 				D92767FF1559B0E900E17EF1 /* uv_article@2x.png */,
-				D2605D03144662150029F16B /* uv_default_avatar@2x.png */,
 				D94427991804A035002F716B /* uv_heart@2x.png */,
 				D92768011559B0E900E17EF1 /* uv_idea@2x.png */,
-				D99902C6152B881F00AED6A7 /* uv_logo@2x.png */,
-				D9C35BD016697039004FAA89 /* uv_vote_chicklet_empty@2x.png */,
-				D9C35BD116697039004FAA89 /* uv_vote_chicklet@2x.png */,
-				D99AFAB01653F2DE0061F50C /* uv_x@2x.png */,
 				D92767FE1559B0E800E17EF1 /* uv_article.png */,
-				D91274AA14ABD9E8003ADF5B /* uv_default_avatar.png */,
 				D94427981804A035002F716B /* uv_heart.png */,
 				D92768001559B0E900E17EF1 /* uv_idea.png */,
-				D99902C5152B881F00AED6A7 /* uv_logo.png */,
-				D2620C6311B586230053EA4C /* uv_vote_chicklet.png */,
-				D2620C6411B586230053EA4C /* uv_vote_chicklet_empty.png */,
-				D99AFAAF1653F2DE0061F50C /* uv_x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -695,6 +683,7 @@
 				D2620F0411B597290053EA4C /* HRFormatJSON.h in Headers */,
 				D2620F0811B597290053EA4C /* HRFormatterProtocol.h in Headers */,
 				D9CB6548181877F2006B05D7 /* UVPostIdeaViewController.h in Headers */,
+				3A37C3D11929A96B00942423 /* UVAttachment.h in Headers */,
 				D2620F0911B597290053EA4C /* HRGlobal.h in Headers */,
 				D2620F0B11B597290053EA4C /* HROperationQueue.h in Headers */,
 				D9E8B6A818105CC8003C7E07 /* UVInstantAnswerManager.h in Headers */,
@@ -757,7 +746,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "UserVoice Inc";
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "UserVoice" */;
@@ -846,6 +835,7 @@
 				D96FAE79165C3DF100A384CC /* UVSigninManager.m in Sources */,
 				D9E8B6A918105CC9003C7E07 /* UVInstantAnswerManager.m in Sources */,
 				D9C35BD6166E7DB0004FAA89 /* UVTruncatingLabel.m in Sources */,
+				3A37C3D21929A96B00942423 /* UVAttachment.m in Sources */,
 				D9C35BDA166E7E00004FAA89 /* UVCalculatingLabel.m in Sources */,
 				D9A7A66518185F7500EBF41E /* UVSuccessViewController.m in Sources */,
 				D9C35BE4167680F2004FAA89 /* UVInitialLoadManager.m in Sources */,
@@ -915,10 +905,16 @@
 				ADDITIONAL_SDKS = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CONFIGURATION_BUILD_DIR = "$(BUILT_PRODUCTS_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(BUILT_PRODUCTS_DIR)";
 				COPY_PHASE_STRIP = NO;
@@ -935,13 +931,19 @@
 				GCC_PREFIX_HEADER = UserVoice_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = Include;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -967,10 +969,16 @@
 				ADDITIONAL_SDKS = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CONFIGURATION_BUILD_DIR = "$(BUILT_PRODUCTS_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(BUILT_PRODUCTS_DIR)";
 				CURRENT_PROJECT_VERSION = 0.1;
@@ -984,13 +992,19 @@
 				GCC_PREFIX_HEADER = UserVoice_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = Include;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -1013,7 +1027,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
@@ -1045,7 +1058,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
@@ -1075,7 +1087,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
@@ -1107,10 +1118,16 @@
 				ADDITIONAL_SDKS = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CONFIGURATION_BUILD_DIR = "$(BUILT_PRODUCTS_DIR)";
 				CONFIGURATION_TEMP_DIR = "$(BUILT_PRODUCTS_DIR)";
 				CURRENT_PROJECT_VERSION = 0.1;
@@ -1124,13 +1141,19 @@
 				GCC_PREFIX_HEADER = UserVoice_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = Include;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
