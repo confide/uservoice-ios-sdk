@@ -52,19 +52,7 @@ static NSBundle *userVoiceBundle;
 
 + (void)presentUserVoiceControllers:(NSArray *)viewControllers forParentViewController:(UIViewController *)parentViewController {
     UINavigationController *navigationController = [self getNavigationControllerForUserVoiceControllers:viewControllers];
-    BOOL useFormSheet;
-    if (IOS8) {
-#ifdef __IPHONE_8_0
-        useFormSheet = parentViewController.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && parentViewController.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
-#endif
-    } else {
-        useFormSheet = IPAD;
-    }
-    if (useFormSheet) {
-        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    } else {
-        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    }
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [parentViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
