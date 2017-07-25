@@ -9,7 +9,7 @@ The UserVoice iOS SDK allows you to integrate a native UserVoice experience dire
 To get started, you will need to have a free UserVoice account to connect to. Go to [uservoice.com/mobile/](https://uservoice.com/mobile/) to sign up for free.
 
 Binary builds of the SDK are available for download:
-* Current release is iOS 8 compatible: [3.2.9](https://github.com/uservoice/uservoice-ios-sdk/releases/tag/3.2.9) (updated 2016-09-07)
+* Current release is iOS 8 compatible: [3.2.9](https://github.com/uservoice/uservoice-ios-sdk/releases/tag/3.2.9) (updated 2017-06-30)
 * See [Releases](https://github.com/uservoice/uservoice-ios-sdk/releases) for release notes and previous versions
 
 Example apps:
@@ -312,3 +312,25 @@ limitations under the License.
 
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/f5b60bff0fbee98bc0e43f57eb49576f "githalytics.com")](http://githalytics.com/uservoice/uservoice-iphone-sdk)
+
+### Reporting Issues
+
+If you are finding an issue, first make sure you are using the latest version of the SDK:
+
+Latest Android SDK version here: https://github.com/uservoice/uservoice-ios-sdk/releases
+
+If you are on the latest version, you need to file an issue on our [github issues page](https://github.com/uservoice/uservoice-ios-sdk/issues) with the following information:
+
+* What behavior are you currently seeing? (ie. response, error, screen)
+
+* What behavior did you expect to see?
+
+Our engineers have requested example code from your team, which they can download example, run, and plainly see the resulting problem.  
+
+To do this, they will need:
+
+* The minimum amount of code required to demonstrate the problem using a [secret gist](gist.github.com).  
+* Isolate the problem to the few lines that call the SDK, plus the minimum boilerplate necessary to compile and run the example.
+* If we will need example secrets or a test account, make that clear in the code or accompanying explanation.
+
+Once filed, you can also reach out to our support team at questions@uservoice.com
