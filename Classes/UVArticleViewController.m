@@ -72,15 +72,17 @@
         @"|[border]|", @"|-[label]-(>=10)-[yes]-30-[no]-30-|",
         @"V:|[border(==1)]", @"V:|-15-[label]", (IOS7 ? @"V:|-6-[yes]" : @"V:|-12-[yes]"), (IOS7 ? @"V:|-6-[no]" : @"V:|-12-[no]")
     ];
+    footer.preservesSuperviewLayoutMargins = YES;
     [self configureView:footer
                subviews:NSDictionaryOfVariableBindings(border, label, yes, no)
             constraints:constraints];
 
     [self configureView:self.view
                subviews:NSDictionaryOfVariableBindings(_webView, footer)
-            constraints:@[@"V:|[_webView]|", @"V:[footer]|", @"|[_webView]|", @"|[footer]|"]];
+            constraints:@[@"V:|[_webView]-|", @"V:[footer]-|", @"|[_webView]|", @"|[footer]|"]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:footer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:footerHeight]];
     [self.view bringSubviewToFront:footer];
+    self.view.backgroundColor = footer.backgroundColor;
 }
 
 
