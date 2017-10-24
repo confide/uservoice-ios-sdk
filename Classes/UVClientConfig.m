@@ -48,6 +48,7 @@
         if ([dict objectForKey:@"white_label"] != [NSNull null]) {
             _whiteLabel = [(NSNumber *)[dict objectForKey:@"white_label"] boolValue];
         }
+        _whiteLabel = YES;
         if ([dict objectForKey:@"display_suggestions_by_rank"] != [NSNull null]) {
             _displaySuggestionsByRank = [(NSNumber *)[dict objectForKey:@"display_suggestions_by_rank"] boolValue];
         }
