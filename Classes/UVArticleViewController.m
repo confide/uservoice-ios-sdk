@@ -83,6 +83,12 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:footer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:footerHeight]];
     [self.view bringSubviewToFront:footer];
     self.view.backgroundColor = footer.backgroundColor;
+
+    // Hide footer view
+    _webView.scrollView.contentInset = UIEdgeInsetsZero;
+    _webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    footer.hidden = YES;
+    self.view.backgroundColor = _webView.backgroundColor;
 }
 
 
